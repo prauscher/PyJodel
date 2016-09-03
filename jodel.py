@@ -76,6 +76,10 @@ class Jodel:
         self.token_expire = int(reply["expiration_date"]) + int(reply["expires_in"])
         self.token = reply["access_token"]
 
+    def set_location(self, location):
+        self.call("PUT", "/users/place/", content={"location": location.export()})
+        self.location = location
+
     def get_post(self, post_id):
         return self.call("GET", "/posts/" + post_id)
 
