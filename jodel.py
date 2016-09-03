@@ -42,7 +42,7 @@ class Jodel:
         if auth:
             headers["Authorization"] = "Bearer " + auth_token
 
-        return requests.request(method, url, data = body, headers = headers)
+        return requests.request(method, url, data=body, headers=headers)
 
     def calculate_hmac(self, method, url, auth_token, timestamp, body):
         auth_token = "" if auth_token is None else auth_token
@@ -54,7 +54,7 @@ class Jodel:
 
         requestKey = method.upper() + "@" + url_parsed.path
         requestValue = method + "%" + url_parsed.hostname + "%" + str(port) + "%" + url_parsed.path + "%" + auth_token + "%" + timestamp + "%" + re.sub('[&=]', '%', url_parsed.query) + "%" + body
-        return hmac.new(self.hmac_secret.encode("utf-8"), msg = requestValue.encode("utf-8"), digestmod = hashlib.sha1).hexdigest().upper()
+        return hmac.new(self.hmac_secret.encode("utf-8"), msg=requestValue.encode("utf-8"), digestmod=hashlib.sha1).hexdigest().upper()
 
     def has_valid_token(self):
         return self.token is not None and time.time() > self.token_expire
@@ -66,7 +66,7 @@ class Jodel:
 
     def request_token(self):
         device_uid = hashlib.sha256(self.uid.encode("utf-8")).hexdigest()
-        reply = self.call("POST", "/users/", content = {"client_id": self.client_id, "device_uid": device_uid, "location": self.location.export()}, auth=False).json()
+        reply = self.call("POST", "/users/", content={"client_id": self.client_id, "device_uid": device_uid, "location": self.location.export()}, auth=False).json()
         self.token_expire = int(reply["expiration_date"]) + int(reply["expires_in"])
         self.token = reply["access_token"]
 
