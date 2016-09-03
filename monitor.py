@@ -35,4 +35,4 @@ def monitor_jodel(client, handle_post, handle_reply):
             print("Monitor error: ".format(str(e)))
 
         # a bit of obfuscation
-        time.sleep(random.randint(90,150))
+        time.sleep(random.randint(300,600))
