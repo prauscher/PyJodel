@@ -7,7 +7,7 @@ import datetime
 import time
 
 def monitor_jodel(client, handle_post, handle_reply):
-    current_position = datetime.datetime.utcnow() - datetime.timedelta(minutes=5)
+    current_position = datetime.datetime.utcnow() - datetime.timedelta(minutes=1)
     while True:
         try:
             client.set_location(client.location)
