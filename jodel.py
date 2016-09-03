@@ -23,7 +23,7 @@ class Jodel:
 
         self.uid = uid
         self.location = location
-        if session is None
+        if session is None:
             session = requests.session()
         self.session = session
 
@@ -118,6 +118,6 @@ class Location:
 if __name__ == "__main__":
     import random
 
-    client = Jodel("yolo", Location("DE", "Darmstadt", 49.877538, 8.654353))
+    client = Jodel("test3", Location("DE", "Darmstadt", 49.877538, 8.654353, 5))
 
     print(client.get_karma())
