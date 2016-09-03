@@ -101,14 +101,15 @@ class Jodel:
         self.call("POST", "/posts/", content=request_data)
 
 class Location:
-    def __init__(self, country, city, lat, lng):
+    def __init__(self, country, city, lat, lng, accuracy):
         self.country = country
         self.city = city
         self.lat = lat
         self.lng = lng
+        self.accuracy = accuracy
 
     def export(self):
-        return {"loc_accuracy": 19.0, "country": self.country, "city": self.city, "loc_coordinates": {"lat": self.lat, "lng": self.lng}}
+        return {"loc_accuracy": self.accuracy, "country": self.country, "city": self.city, "loc_coordinates": {"lat": self.lat, "lng": self.lng}}
 
 
 if __name__ == "__main__":
