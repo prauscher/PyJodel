@@ -48,6 +48,7 @@ class Jodel:
         except Exception as e:
             print((method, path, content, headers, reply, reply.text))
             print("Error: " + reply.text)
+            raise e
 
     def calculate_hmac(self, method, url, auth_token, timestamp, body):
         auth_token = "" if auth_token is None else auth_token
