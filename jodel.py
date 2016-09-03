@@ -10,6 +10,7 @@ import time
 import datetime
 import urllib.parse
 import requests
+import base64
 
 
 class Jodel:
@@ -89,6 +90,15 @@ class Jodel:
     def get_karma(self):
         return self.call("GET", "/users/karma/")["karma"]
 
+    def new_post(self, message, color="DD5F5F", image_data=None, ancestor=None):
+        location = self.location
+        location["name"] = location["city"]
+        request_data = {"color": color, "message": message, "location": location}
+        if ancestor is not None:
+            request_data["ancestor"] = ancestor
+        if image_data is not None:
+            request_data["image"] = base64.b64encode(image_data)
+        self.call("POST", "/posts/", content=request_data)
 
 class Location:
     def __init__(self, country, city, lat, lng):
