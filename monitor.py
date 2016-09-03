@@ -17,6 +17,7 @@ def monitor_jodel(client, handle_post, handle_reply):
             for post in posts:
                 updated_at = datetime.datetime.strptime(post["updated_at"], "%Y-%m-%dT%H:%M:%S.%fZ")
                 if updated_at > current_position:
+                    time.sleep(random.randint(30,45))
                     post_details = client.get_post(post["post_id"])
                     created_at = datetime.datetime.strptime(post_details["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ")
 
