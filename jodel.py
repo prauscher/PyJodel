@@ -49,7 +49,7 @@ class Jodel:
         reply = self.session.request(method, url, data=body, headers=headers)
         try:
             if reply.text == "":
-                return reply.status_code >= 200 && reply.status_code < 300
+                return reply.status_code >= 200 and reply.status_code < 300
             return reply.json()
         except Exception as e:
             print((method, path, content, headers, reply, reply.text))
