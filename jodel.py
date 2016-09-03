@@ -14,7 +14,7 @@ import base64
 
 
 class Jodel:
-    def __init__(self, uid, location):
+    def __init__(self, uid, location, requests_kwargs={}):
         self.api_url = "https://api.go-tellm.com/api/v2"
         self.client_id = "81e8a76e-1e02-4d17-9ba0-8a7020261b26"
         self.client_version = "4.14.1"
@@ -23,6 +23,7 @@ class Jodel:
 
         self.uid = uid
         self.location = location
+        self.requests_kwargs = requests_kwargs
 
         self.token = None
         self.token_expire = None
@@ -43,7 +44,7 @@ class Jodel:
         if auth:
             headers["Authorization"] = "Bearer " + auth_token
 
-        reply = requests.request(method, url, data=body, headers=headers)
+        reply = requests.request(method, url, data=body, headers=headers, **self.requests_kwargs)
         try:
             return reply.json()
         except Exception as e:
