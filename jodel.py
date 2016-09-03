@@ -59,7 +59,7 @@ class Jodel:
         port = 443 if url_parsed.port is None else url_parsed.port
 
         requestKey = method.upper() + "@" + url_parsed.path
-        requestValue = method + "%" + url_parsed.hostname + "%" + str(port) + "%" + url_parsed.path + "%" + auth_token + "%" + timestamp + "%" + re.sub('[&=]', '%', url_parsed.query) + "%" + body
+        requestValue = method + "%" + url_parsed.hostname + "%" + str(port) + "%" + url_parsed.path + "%" + auth_token + "%" + timestamp + "%" + query + "%" + body
         return hmac.new(self.hmac_secret.encode("utf-8"), msg=requestValue.encode("utf-8"), digestmod=hashlib.sha1).hexdigest().upper()
 
     def has_valid_token(self):
