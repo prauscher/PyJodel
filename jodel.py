@@ -101,41 +101,4 @@ if __name__ == "__main__":
 
     client = Jodel("yolo", Location("DE", "Darmstadt", 49.877538, 8.654353))
 
-#    print(client.get_karma())
-
-#    print(client.get_post("57c9fefcc6dbe096795e56c8"))
-
-#    recent_jodels = client.get_posts()
-#    for jodel in recent_jodels:
-#        print(jodel)
-
-    def handle_post(post):
-        print(post)
-
-    def handle_reply(parent_id, reply):
-        print((parent_id, reply))
-
-    current_position = datetime.datetime.utcnow() - datetime.timedelta(minutes=5)
-    while True:
-        next_position = current_position
-        posts = client.get_posts()
-        for post in posts:
-            updated_at = datetime.datetime.strptime(post["updated_at"], "%Y-%m-%dT%H:%M:%S.%fZ")
-            if updated_at > current_position:
-                post_details = client.get_post(post["post_id"])
-                created_at = datetime.datetime.strptime(post_details["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ")
-
-                if created_at > current_position:
-                    handle_post(post_details)
-                    next_position = max(next_position, created_at)
-
-                if "children" in post_details:
-                    for children in post_details["children"]:
-                        created_at = datetime.datetime.strptime(children["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ")
-                        if created_at > current_position:
-                            handle_reply(post["post_id"], children)
-                            next_position = max(next_position, created_at)
-        current_position = next_position
-
-        # a bit of obfuscation
-        time.sleep(random.randint(90,150))
+    print(client.get_karma())
