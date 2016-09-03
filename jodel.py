@@ -42,7 +42,12 @@ class Jodel:
         if auth:
             headers["Authorization"] = "Bearer " + auth_token
 
-        return requests.request(method, url, data=body, headers=headers)
+        reply = requests.request(method, url, data=body, headers=headers)
+        try:
+            return reply.json()
+        except Exception as e:
+            print((method, path, content, headers, reply, reply.text))
+            print("Error: " + reply.text)
 
     def calculate_hmac(self, method, url, auth_token, timestamp, body):
         auth_token = "" if auth_token is None else auth_token
@@ -66,18 +71,18 @@ class Jodel:
 
     def request_token(self):
         device_uid = hashlib.sha256(self.uid.encode("utf-8")).hexdigest()
-        reply = self.call("POST", "/users/", content={"client_id": self.client_id, "device_uid": device_uid, "location": self.location.export()}, auth=False).json()
+        reply = self.call("POST", "/users/", content={"client_id": self.client_id, "device_uid": device_uid, "location": self.location.export()}, auth=False)
         self.token_expire = int(reply["expiration_date"]) + int(reply["expires_in"])
         self.token = reply["access_token"]
 
     def get_post(self, post_id):
-        return self.call("GET", "/posts/" + post_id).json()
+        return self.call("GET", "/posts/" + post_id)
 
     def get_posts(self):
-        return self.call("GET", "/posts/").json()["posts"]
+        return self.call("GET", "/posts/")["posts"]
 
     def get_karma(self):
-        return self.call("GET", "/users/karma/").json()["karma"]
+        return self.call("GET", "/users/karma/")["karma"]
 
 
 class Location:
