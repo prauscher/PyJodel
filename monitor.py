@@ -10,7 +10,7 @@ def monitor_jodel(client, handle_post, handle_reply):
     current_position = datetime.datetime.utcnow() - datetime.timedelta(minutes=5)
     while True:
         try:
-            client.set_position(client.location)
+            client.set_location(client.location)
 
             next_position = current_position
             posts = client.get_posts()
