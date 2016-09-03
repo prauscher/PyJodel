@@ -30,7 +30,7 @@ class Jodel:
         url = self.api_url + path
         body = "" if content is None else json.dumps(content)
         auth_token = self.get_token() if auth else None
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
         hmac = self.calculate_hmac(method, url, auth_token, timestamp, body)
 
         headers["User-Agent"] = "Jodel/" + self.client_version + " Dalvik/2.1.0 (Linux; U; Android 6.0.1; Find7 Build/MMB29M)"
